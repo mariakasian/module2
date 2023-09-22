@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
+
 class SumCalculatorTest {
     SumCalculator sumCalculator;
 
@@ -42,4 +44,18 @@ class SumCalculatorTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> sumCalculator.sum(66000));
     }
 
+    @Test
+    public void testThatScanNumberWorksWithValidInput() throws NoSuchElementException {
+        String input = "5\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+        ScanNumber.scan();
+        Assertions.assertEquals(5, ScanNumber.n);
+    }
+
+    @Test
+    public void testThatScanNumberThrowsExceptionWithInvalidInput() throws NoSuchElementException {
+        String input = "abc\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+        Assertions.assertThrows(NoSuchElementException.class, () -> {ScanNumber.scan();});
+    }
 }
